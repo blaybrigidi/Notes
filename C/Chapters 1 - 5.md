@@ -143,6 +143,85 @@ Though the topic of pointers is often assoicated with Armageddon, it is quite si
 
 A pointer is simply a variable that holds a memory address
 
+The following code declares a pointer variable to an integer but what do we assign to it?
+
+```c
+//pointer declaration
+int *pointer;
+```
+
+#### Address-of
+
+The answer to the previous question is simple, we make use of the address-of operator which returns the address of a variable. This operator is denoted by ‘&’
+
+```c
+//pointer instantiation 
+int age = 21;
+int *pointer = &age;
+```
+
+Notice that age is an integer and our pointer variable is an integer pointer. When assigning into a pointer variable, the value being assigned must be the same as the pointer variable
+
+**Note**: the address-of operator (&) returns memory addresses which have a type (* to the data type it is pointing to)
+
+Hence the following code is incorrect and will throw a Type Mismatch error
+
+```c
+char* my_name = "Brigidi";
+int* pointer = &my_name;
+```
+
+#### Dereferencing
+
+Now that we have our pointers and they store some memory address or in other words they point to some location in memory.
+
+We can now access the object they are pointing to directly via the dereference operator which is also *
+
+```c
+// march 27th 2026 i was 20
+int age = 20;
+int *age_pointer;
+age_pointer = &age;
+
+//march 28th 2026 i turned 21
+*age_pointer = 21;
+```
+
+#### Null Pointers
+
+Some pointers hold NULL values /addresses(these aren’t really null addresses, they are either address 0 or some other special invalid address)
+
+```c
+int *p = NULL;
+*p = 12;
+```
+
+In the preceding code, p points to address 0 or some other invalid address and tries to write 12 to that address. However, these addresses are not mapped to physical memory, but only virtual memory.
+
+### Main Use of Pointers
+
+We mainly use pointers in functions where we want to have access to more than just one result since only one thing can be returned from functions
+
+How it works is we pass a pointer to an object into the parameter and this pointer gets copied into a parameter copy that is only accessible in the function. So now we have two pointers to the same object.
+
+```c
+// function to change my age
+int age = 20;
+int *age_pointer;
+age_pointer = &age;
+int* change_age(int *pointer) {
+*pointer = 21;
+return pointer;
+
+}
+
+change_age(age_pointer)
+```
+
+In the previous code we define a function that returns an int pointer and takes an int pointer as its parameter.
+
+When we call this function, we take age_pointer as an argument. This value is copied into the int *pointer local parameter variable and now there are two pointer variables containing the same address.
+
 # Gotchas!
 
 1. Initialized variables that are used may bring about undetermined behavior because as we noted they do not always resolve to 0
